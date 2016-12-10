@@ -95,16 +95,8 @@ function recent_posts_function($atts) {
 	return $output;
 }
 
-// function posts_comments_function($atts) {
-// 	return comments_template();
-// }
-
 # Register shortcodes
 function register_shortcodes(){
 	add_shortcode('recent-posts', 'recent_posts_function');
-	// add_shortcode('comments', 'posts_comments_function');
 }
 add_action( 'init', 'register_shortcodes');
-
-
-show_admin_bar(false);
