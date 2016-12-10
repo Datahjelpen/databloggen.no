@@ -1,10 +1,21 @@
 /*
-	Theme Name: Semplice Child Theme
-	Description: Child Theme for Semplice
-	Author: Bjørnar Hagen - Datahjelpen AS
-	Template: semplice
+	Theme Name:   Semplice Child Theme
+	Description:  Child Theme for Semplice
+	Author:       Bjørnar Hagen - Datahjelpen AS
+	Template:     semplice
+	Theme URI:    http://datahjelpen.org/
+	Author URI:   http://datahjelpen.org
+	Version:      1.0.0
+	License:      GNU General Public License v3 or later
+	License URI:  http://www.gnu.org/licenses/gpl-3.0.html
+	Tags:         test
+	Text Domain:  semplice-child
 */
 
 /* Custom CSS Start */
+
+.comment-content {
+	position: relative;
+}
 
 /* Custom CSS End */
