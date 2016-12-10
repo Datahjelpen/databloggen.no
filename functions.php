@@ -4,9 +4,14 @@
  * semplice.child.theme
  */
 
+// Child style.css
+add_action( 'wp_enqueue_scripts', 'enqueue_parent_theme_style' );
+function enqueue_parent_theme_style() {
+	wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.css' );
+}
+
 #----------------------------------------#
-# portfolio custom post type             #
-# semplice.theme                         #
+# portfolio custom post type - update    #
 #----------------------------------------#
 
 add_filter( 'register_post_type_args', function ( $args, $post_type ) {
@@ -26,13 +31,80 @@ add_filter( 'register_post_type_args', function ( $args, $post_type ) {
 		'not_found' => __('Ingen innlegg funnet', 'semplice'),
 		'not_found_in_trash' => __('Ingen innlegg i søppla', 'semplice'),
 		'parent_item_colon' => __('Forelder innlegg:', 'semplice'),
-		'menu_name' => __('Innlegg', 'semplice'),
+		'menu_name' => __('Innlegg', 'semplice')
 	];
 
 	// Change args
 	$args['rewrite']   = ['slug' => 'innlegg'];
 	$args['labels']    = $labels;
 	$args['menu_icon'] = 'dashicons-admin-post';
+	$args['menu_position'] = 5;
+	$args['supports'] = ['title', 'author', 'thumbnail', 'custom-fields', 'comments'];
 
 	return $args;
 }, 10, 2 );
+
+# Remove normal posts from menu
+function custom_menu_page_removing() {
+	remove_menu_page('edit.php');
+}
+add_action( 'admin_menu', 'custom_menu_page_removing' );
+
+#----------------------------------------#
+# recent_posts shortcode                 #
+#----------------------------------------#
+
+function recent_posts_function($atts) {
+	# default options
+	extract(shortcode_atts([
+			'posts' => 1,
+			'offset' => 0,
+			'post_type' => 'work',
+			'order' => 'DESC' ,
+			'orderby' => 'date'
+		], $atts)
+	);
+
+	# get posts with query
+	query_posts([
+			'orderby' => $orderby,
+			'order' => $order ,
+			'showposts' => $posts,
+			'offset' => $offset,
+			'post_type' => $post_type,
+			'category__not_in' => [
+				get_cat_ID('page')
+			]
+		]
+	);
+
+	# make output
+	if (have_posts()) {
+		while (have_posts()) {
+			the_post();
+
+			ob_start();
+			include(__DIR__ . '/includes/templates/recent-posts.php');
+			$output = ob_get_contents();
+			ob_end_clean();
+		}
+	}
+
+	wp_reset_query();
+
+	return $output;
+}
+
+// function posts_comments_function($atts) {
+// 	return comments_template();
+// }
+
+# Register shortcodes
+function register_shortcodes(){
+	add_shortcode('recent-posts', 'recent_posts_function');
+	// add_shortcode('comments', 'posts_comments_function');
+}
+add_action( 'init', 'register_shortcodes');
+
+
+show_admin_bar(false);
