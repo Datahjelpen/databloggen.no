@@ -43,22 +43,25 @@
 				// reset postdata
 				wp_reset_postdata();
 			?>
-		</div>
-		
-		<?php if(get_field('share_visibility') === 'visible' && get_field('global_share_visbility', 'options') !== 'hidden') : ?>
+		</div>		
+<!-- 		<?php if(get_field('share_visibility') === 'visible' && get_field('global_share_visbility', 'options') !== 'hidden') : ?>
 			<div class="share-box fade-content">
 				<div class="container">
 					<?php get_template_part('partials/share'); ?>
 				</div>
 			</div>
-		<?php endif; ?>
-		<div class="container">
-		<?php
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
-		?>
+		<?php endif; ?> -->
+		<div class="fade-content c-lightest dh--comments">
+			<div class="container dh--row">
+				<div class="col s12 offset-m2 m8">
+				<?php
+					// If comments are open or we have at least one comment, load up the comment template.
+					if ( comments_open() || get_comments_number() ) :
+						comments_template();
+					endif;
+				?>
+				</div>
+			</div>
 		</div>
 		<div id="project-panel-footer" class="fade-content">
 			<?php 
