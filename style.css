@@ -39,6 +39,10 @@ h6,
 	color: #192226;
 }
 
+p {
+	font-weight: 300;
+}
+
 a {
 	color: #263238;
 }
@@ -512,7 +516,6 @@ a:active {
 .fp-article-excerpt {
 	margin: 0;
 	color: #263238;
-	font-weight: 300;
 }
 
 .fp-article-image-wrapper {
@@ -550,7 +553,6 @@ a:active {
 	left: 0;
 	display: block;
 	margin: 0;
-	font-weight: 300;
 	font-size: 0.9em;
 	/*width: 100%;*/
 	list-style-type: none;
