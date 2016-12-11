@@ -39,7 +39,7 @@ add_filter( 'register_post_type_args', function ( $args, $post_type ) {
 	$args['labels']    = $labels;
 	$args['menu_icon'] = 'dashicons-admin-post';
 	$args['menu_position'] = 5;
-	$args['supports'] = ['title', 'author', 'thumbnail', 'custom-fields', 'comments', 'post-formats'];
+	$args['supports'] = ['title', 'author', 'thumbnail', 'custom-fields', 'comments', 'post-formats', 'excerpt'];
 
 	return $args;
 }, 10, 2 );
