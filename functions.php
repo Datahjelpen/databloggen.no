@@ -39,7 +39,7 @@ add_filter( 'register_post_type_args', function ( $args, $post_type ) {
 	$args['labels']    = $labels;
 	$args['menu_icon'] = 'dashicons-admin-post';
 	$args['menu_position'] = 5;
-	$args['supports'] = ['title', 'author', 'thumbnail', 'custom-fields', 'comments'];
+	$args['supports'] = ['title', 'author', 'thumbnail', 'custom-fields', 'comments', 'post-formats'];
 
 	return $args;
 }, 10, 2 );
@@ -80,7 +80,10 @@ function recent_posts_function($atts) {
 
 	# make output
 	if (have_posts()) {
+		$post_nr = 0;
 		while (have_posts()) {
+			$post_nr++;
+
 			the_post();
 
 			ob_start();
