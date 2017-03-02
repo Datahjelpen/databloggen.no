@@ -38,19 +38,80 @@
 				// output content
 				$output = apply_filters('the_content', $content);
 
-				echo $output;
-				
+				$show_extra = true;
+				if (strlen($content) != 0) {
+					$show_extra = false;
+					echo $output;
+				}
+
+
+				if(trim(get_the_content) != '') {
+					if (has_post_thumbnail( $loop->post->ID )) {
+						$image_id = get_post_thumbnail_id($loop->post->ID);
+						$image_size = 'large';
+
+						// Smaller files for mobile phones
+						if (wp_is_mobile()) {
+							$image_size = 'medium';
+						}
+
+						$image_url = wp_get_attachment_image_src( $image_id, $image_size )[0];
+					} else {
+						$image_url = get_stylesheet_directory_uri() . '/images/placeholder.png';
+					}
+			?>
+			<?php if ($show_extra) { echo '<div id="content-holder"></div>'; } ?>
+			<div class="container dh--row">
+				<div class="col s12 offset-m2 m8">
+					<div class="post-header">
+						<?php
+							if ( 'post' === get_post_type() ) :
+								echo '<div class="entry-meta">';
+									if ( is_single() ) :
+										twentyseventeen_posted_on();
+									else :
+										echo twentyseventeen_time_link();
+										twentyseventeen_edit_link();
+									endif;
+								echo '</div><!-- .entry-meta -->';
+							endif;
+
+							if ($show_extra) {
+								the_title( '<h1 class="entry-title">', '</h1>' );
+							}
+						?>
+					</div><!-- .post-header -->
+				</div>
+			</div>
+			<?php
+				if ($show_extra) {
+			?>
+			<div class="post-thumbnail">
+				<div class="bg-image" style="background-image: url('<?= $image_url; ?>');"></div>
+			</div><!-- .post-thumbnail -->
+			<?php
+				}
+			?>
+			<div class="container dh--row">
+				<div class="col s12 offset-m2 m8">
+					<div class="post-content">
+						<?php the_content(); ?>
+					</div><!-- .post-content -->
+				</div>
+			</div>
+			<?php	
+				}
 				// reset postdata
 				wp_reset_postdata();
 			?>
 		</div>		
-<!-- 		<?php if(get_field('share_visibility') === 'visible' && get_field('global_share_visbility', 'options') !== 'hidden') : ?>
+		<?php if(get_field('share_visibility') === 'visible' && get_field('global_share_visbility', 'options') !== 'hidden') : ?>
 			<div class="share-box fade-content">
 				<div class="container">
 					<?php get_template_part('partials/share'); ?>
 				</div>
 			</div>
-		<?php endif; ?> -->
+		<?php endif; ?>
 		<div class="fade-content c-lightest dh--comments">
 			<div class="container dh--row">
 				<div class="col s12 offset-m2 m8">
