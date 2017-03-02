@@ -47,6 +47,17 @@ add_filter( 'register_post_type_args', function ( $args, $post_type ) {
 # Remove normal posts from menu
 function custom_menu_page_removing() {
 	remove_menu_page('edit.php');
+if(is_admin()) {
+	add_action( 'init', 'enqueue_semplice_scripts_custom');
+
+	function enqueue_semplice_scripts_custom() {
+			global $pagenow;
+
+			if ($pagenow == 'post.php' || $pagenow == 'admin.php') {
+				wp_enqueue_style('content-editor', get_stylesheet_directory_uri() . '/content-editor/css/styles.min.css', false, '1.0.0');
+				wp_enqueue_style('semplice-admin-css',  get_stylesheet_directory_uri() . '/css/admin.css', false, '1.0.0');
+			}
+	}
 }
 add_action( 'admin_menu', 'custom_menu_page_removing' );
 
